@@ -4,6 +4,8 @@ import java.text.DecimalFormat;
 
 public class Pilote {
     public static final int NOMBRE_PNEU_EN_RESERVE = 16;
+    // MR Tu as oublié le mot-clé final pour indiquer que cette valeur ne changera
+    // pas pour les deux premiers attributs
     private String nom;
     private String nationalite;
     private int nombrePoint;
@@ -16,27 +18,35 @@ public class Pilote {
     public Pilote(String nom, String nationalite) {
         this.nom = nom;
         this.nationalite = nationalite;
+        // MR Il faut initialiser les variables de compteur à 0
         this.nombrePoint = nombrePoint;
         this.nombreVictoire = nombreVictoire;
         this.nombrePodium = nombrePodium;
+        // MR Tu n'as pas besoin de créer un nouveau Pneu ici, tu dois initialiser le
+        // tableau pneusEnReserve
         new Pneu(null, NOMBRE_PNEU_EN_RESERVE);
+        // MR Ce constructeur indique que le pilote n'a pas de voiture assignée
         this.voiture = voiture;
     }
 
     public Pilote(String nom, String nationalite, Voiture voiture) {
         this.nom = nom;
         this.nationalite = nationalite;
+        // MR Il faut initialiser les variables de compteur à 0
         this.nombrePoint = nombrePoint;
         this.nombreVictoire = nombreVictoire;
         this.nombrePodium = nombrePodium;
+        // MR Tu n'as pas besoin de créer un nouveau Pneu ici, tu dois initialiser le
+        // tableau pneusEnReserve
         new Pneu(null, NOMBRE_PNEU_EN_RESERVE);
         this.voiture = voiture;
     }
 
-    public boolean deposerPneuEnReserve(){
+    // MR Il faut ajouter un paramètre Pneu pour la méthode deposerPneuEnReserve
+    public boolean deposerPneuEnReserve() {
         boolean aReussi = false;
 
-        if(pneusEnReserve == null){
+        if (pneusEnReserve == null) {
             for (int i = 0; i < pneusEnReserve.length; i++) {
                 if (pneusEnReserve[i] == null) {
                     pneusEnReserve[i] = true;
@@ -48,6 +58,8 @@ public class Pilote {
         return aReussi;
     }
 
+    // MR Il faut ajouter un paramètre TypePneu pour la méthode retirerPneuEnReserve
+    // de ce type
     public boolean retirerPneuEnReserve() {
         boolean aReussi = false;
 
@@ -63,6 +75,8 @@ public class Pilote {
 
     }
 
+    // MR Il faut ajouter un paramètre TypePneu pour la méthode retirerPneuEnReserve
+    // de ce type
     public int compterNombrePneuEnreserveDeType() {
         int pneusEnReserveDeType = 0;
         for (int i = 0; i < pneusEnReserve.length; i++) {
@@ -95,10 +109,12 @@ public class Pilote {
         return pneuEnNouvelleReserve;
     }
 
+    
     public String pressionMoyenneDesPneusEnReserveFormatee() {
 
         double pressiontotale = 0;
         for (int i = 0; i < pneusEnReserve.length; i++) {
+            //MR Ici tu essaye d'aditionner un tableau de Pneu à un double, ce n'est pas possible
             pressiontotale += pneusEnReserve[i];
         }
         Double chaineDeMoyenne = pressiontotale / NOMBRE_PNEU_EN_RESERVE;
@@ -111,6 +127,8 @@ public class Pilote {
     public int supprimerPneusDePressionInferieure(double pression){
         int nombreSupprime = 0;
         for (int i = 0; i < pneusEnReserve.length; i++) {
+            //MR Il faut vérifier si pneusEnReserve[i] n'est pas null avant de comparer la pression
+            // Et utiliser pneuxEnReserve[i].getPression() pour obtenir la pression du pneu
             if (pneusEnReserve < pression) {
                 pneusEnReserve = null;
                 nombreSupprime;
@@ -167,10 +185,12 @@ public class Pilote {
 
     @Override
     public String toString() {
-        
+
+
         String resultat = "Pilote: " + nom + " ( " + nationalite + " )\n";
 
         if (voiture != null) {
+            //MR Il faut le mettre dans une variable pour éviter de l'appeler plusieurs fois
             voiture.getNomEquipe();
             voiture.getNumero();
             resultat += "Voiture " + voiture.getNomEquipe() + " (" + voiture.getNumero() + ")\n";
@@ -183,6 +203,7 @@ public class Pilote {
         }
         for (int i = 0; i < pneusEnReserve.length; i++) {
             if (pneusEnReserve != null) {
+                //MR Il faut utiliser le pneusEnReserve[i] pour obtenir le type de pneu
                 pneu.getType();
                 resultat += "Pneu en réserve: " + pneu.getType() + "\n";
             }
